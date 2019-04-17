@@ -37,7 +37,14 @@ Here is the basic procedure:
 This method requires some significant additional programming when developing the simulation, which may deter users. However, use of this method could be incentivized by providing discounts for users who incorporate this method and indicate that their program can tolerate architecture changes.
 
 ## Handling hardware change in the cluster software stack ##
-TKTK
+The approach of handling hardware changes within the simulation program itself requires users to write a significant amount of extra code for their simulations than would be required for a traditional HPC cluster, making it not very attractive in general. Having the cluster software stack handle these changes and present a homogeneous environment to the simulation program would make things significantly easier for users.
+
+However, from our perspective, this approach to the problem is more difficult. Users rely on various assumptions about hardware when designing simulation software, and a stack-level solution would have to account for each possible assumption in order to be generally useful. Some potential ideas include:
+
+* Providing a programming interface that allows the user to specify a general-purpose function to handle spatial boundary interactions
+* Encouraging the building of arbitrarily sliced simulation domains that can expand and contract, and allowing the cluster software to jointly optimize the configuration for simulation efficiency and cluster operation
+
+Both of these ideas would be difficult to implement in a language-agnostic manner.
 
 
 ***
