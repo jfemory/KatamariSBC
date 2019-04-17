@@ -4,9 +4,7 @@ In our cluster architecture, one of our primary goals is to allow for the gracef
 ## Electromagnetics example ##
 In the finite-difference time-domain (FDTD) method of simulating electromagnetics problems, a 3D space is discretized into some number of cells along each axis. Given some intial conditions and boundary conditions, Maxwell's curl equations are then solved using finite-difference approximations of the spatial and time derivatives. In the explicit FDTD method, the influence of each node on its neighbors must be directly computed at each time step.
 
-The explicit FDTD method can be implemented within MPI, with the first example in the literature appearing in 2001 in an article by Guiffaut and Mahdjoubi [^ref1]. They describe a scheme for decomposing the 3D spatial grid into several subdomains along two axes. Each worker in the MPI pool receives one of these subdomains to work on. For nodes in the interior of each subdomain, calculations can be carried out node-to-node with no inter-subdomain communication. However, each node that lies on a boundary between subdomains must use the field values computed at its neighbor to fully compute its own field values. Hence, significant communication must occur at each time step among these boundary nodes
-
-[^ref1]: Guiffaut, C., and K. Mahdjoubi. "A parallel FDTD algorithm using the MPI library." IEEE Antennas and Propagation Magazine 43.2 (2001): 94-103.
+The explicit FDTD method can be implemented within MPI, with the first example in the literature appearing in 2001 in an article by Guiffaut and Mahdjoubi [1]. They describe a scheme for decomposing the 3D spatial grid into several subdomains along two axes. Each worker in the MPI pool receives one of these subdomains to work on. For nodes in the interior of each subdomain, calculations can be carried out node-to-node with no inter-subdomain communication. However, each node that lies on a boundary between subdomains must use the field values computed at its neighbor to fully compute its own field values. Hence, significant communication must occur at each time step among these boundary nodes
 
 ## Fluctuating hardware environment ##
 In a standard HPC environment, the programmer would know ahead of time how many (computing) nodes they could reasonably expect to use for a simulation. They would write their scheduling script to request a certain number of nodes, and the scheduler would allocate their job resources accordingly. Within the program, MPI would then be used to split the simulation grid into subdomains, allocate each subdomain to a computation node, and manage communication between the subdomains. Throughout the simulation, the underlying hardware remains invariant, and in the case that it does not, the program fails.
@@ -40,3 +38,9 @@ This method requires some significant additional programming when developing the
 
 ## Handling hardware change in the cluster software stack ##
 TKTK
+
+
+***
+
+
+[1]: Guiffaut, C., and K. Mahdjoubi. "A parallel FDTD algorithm using the MPI library." IEEE Antennas and Propagation Magazine 43.2 (2001): 94-103.
